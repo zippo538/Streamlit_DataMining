@@ -46,15 +46,15 @@ with tab2 :
     scores= []
     for n in range(2,10) :
         kmeans = KMeans(n_clusters=n)
-        y_pred_kmeans = kmeans.fit_predict(RFM_Table_scaled)
-
-        scores.append(silhouette_score(RFM_Table_scaled,y_pred_kmeans))
+        kmeans.fit(RFM_Table_scaled)        
+        silhouette = silhouette_score(RFM_Table_scaled, kmeans.labels_)
+        scores.append(silhouette)
+        #st.caption("Nilai Cluster : ", n ,'Nilai Silhoutte : ' , silhouette )
         
-    plt.plot(range(2,10),scores)
-    plt.title('number of cluster vs silhouette_score')
-    plt.xlabel('number of cluster')
-    plt.ylabel('silhouette_score')
-    st.pyplot(plt)
+    #scores
+        
+    st.write("Silhouette Scores for Different Numbers of Clusters")
+    st.line_chart(scores)
 
 
        

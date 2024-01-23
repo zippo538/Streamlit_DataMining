@@ -53,6 +53,7 @@ def check_skew(df_skew, column):
 with tab1 :
     for col in rfm_df.columns[1:]:
         check_skew(rfm_df, col)
+        
 with tab2 :
     # standarkan data
     rfm_df_log = rfm_df.copy()

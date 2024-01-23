@@ -28,24 +28,29 @@ RFM_Table_scaled = pd.DataFrame(RFM_Table_scaled, columns=rfm_df_log.columns[1:]
 
 
 # Cluster menggunakan method elbow
+
 def elbw_mthd() :
         kmean_model = KMeans(n_clusters=4, random_state=5)
         kmean_y = kmean_model.fit(RFM_Table_scaled)
         centers = kmean_model.cluster_centers_
 
         rfm_df['Cluster'] = kmean_model.labels_
+        rfm_df.rename()
         st.header("Hasil Cluster menggunakan elbow method")
 
         df_new = rfm_df.groupby(['Cluster']).agg({
+                'customer_unique_id' : 'count',
                 'Recency': 'mean',
                 'Frequency': 'mean',
-                'Monetary': ['mean', 'count']
+                'Monetary': 'mean'
                 
         }).round(0)
         return df_new
 
 df_elbw = elbw_mthd()
 st.table(df_elbw)
+
+
 
 # Cluster menggunakan Silhoutte Coeffieciency
 def slht_mthd() :
